@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amader SMP — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-green:#0b6b3a; --accent-red:#d61b2b; --muted:#e9f7ee;
+  --glass: rgba(255,255,255,0.04); --glass-2: rgba(255,255,255,0.02);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#072f1a 0%,var(--bg-green) 60%);color:#f6fff9;min-height:100vh;cursor:none;overflow-x:hidden}
+.container{max-width:1100px;margin:20px auto;padding:18px}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;border-radius:12px;background:radial-gradient(circle at 30% 30%,var(--accent-red),#b01722);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+nav a{color:var(--muted);text-decoration:none;margin-left:12px;padding:8px;border-radius:8px;transition:all .18s}
+nav a:hover{color:#fff;transform:translateY(-3px)}
+.hero{display:flex;gap:24px;align-items:center;margin-top:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+.hero-left{flex:1}
+.hero-right{width:320px;min-width:240px}
+h1{margin:0;font-size:28px}
+.lead{color:rgba(255,255,255,0.9);margin:8px 0 16px 0}
+.btn{background:linear-gradient(90deg,var(--accent-red),#b01722);color:#fff;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.info-pill{display:inline-block;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,0.12);margin-top:8px}
+
+/* Animated boxes grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
+.box{
+  position:relative;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);overflow:hidden;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+}
+.box:hover{transform:translateY(-10px) rotate(-0.5deg);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+.box .title{display:flex;justify-content:space-between;align-items:center}
+.box .title h3{margin:0;font-size:16px}
+.badge{background:var(--accent-red);padding:6px 8px;border-radius:8px;font-weight:800;color:#fff}
+
+/* animated accent shapes inside boxes */
+.shape{
+  position:absolute;border-radius:50%;opacity:0.12;filter:blur(12px);transform:translate3d(0,0,0);
+}
+.shape.s1{width:160px;height:160px;background:var(--accent-red);right:-40px;top:-40px}
+.shape.s2{width:120px;height:120px;background:#fff;left:-30px;bottom:-30px;opacity:0.04}
+.shape.s3{width:80px;height:80px;background:var(--accent-red);left:10px;top:-20px;opacity:0.08}
+
+/* subtle floating icons */
+.icon{
+  width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.03);display:inline-flex;align-items:center;justify-content:center;margin-right:8px;
+  transition:transform .18s;
+}
+.box:hover .icon{transform:translateY(-6px) rotate(-6deg)}
+
+/* pulse animation for CTA */
+.pulse{display:inline-block;padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent-red),#b01722);box-shadow:0 8px 30px rgba(214,27,43,0.18);animation:pulse 2.6s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+/* small text */
+.small{font-size:13px;color:rgba(255,255,255,0.85);margin-top:8px}
+
+/* footer */
+footer{margin:28px auto;text-align:center;color:rgba(255,255,255,0.7)}
+
+/* custom cursor */
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:36px;height:36px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));transition:transform .12s ease}
+.cursor .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-red);box-shadow:0 6px 18px rgba(214,27,43,0.25)}
+
+/* responsive */
+@media (max-width:720px){.hero{flex-direction:column}.hero-right{width:100%}}
+</style>
+</head>
+<body>
+<canvas id="snow" style="position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:10;mix-blend-mode:screen"></canvas>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <div class="logo">AS</div>
+      <div>
+        <div style="font-weight:800">Amader SMP</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8)">Bangladeshi 24/7 Minecraft SMP</div>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">HOME</a>
+      <a href="ranks.html">RANKS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="owner.html">OWNER</a>
+      <a href="rules.html">RULES</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="home-title">
+    <div class="hero-left">
+      <h1 id="home-title">Welcome to <span style="background:linear-gradient(90deg,#0b6b3a,#0f7a46);padding:6px 10px;border-radius:999px">Amader SMP</span></h1>
+      <p class="lead">A friendly Bangladeshi Minecraft survival server running 24/7. Java and Bedrock players are welcome — join for events, builds, and community-driven gameplay.</p>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="btn pulse" onclick="location.href='ranks.html'">View Ranks</button>
+        <button class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06)" onclick="location.href='about.html'">Get IP & Info</button>
+      </div>
+
+      <div class="small" style="margin-top:12px">
+        <strong>Server IP</strong><br>
+        Java IP: <strong>node.flarehost.fun:5001</strong><br>
+        Bedrock IP: <strong>node.flarehost.fun:5001</strong> Port: <strong>5001</strong>
+      </div>
+
+      <div style="margin-top:14px;color:rgba(255,255,255,0.9)">
+        <h4 style="margin:8px 0 6px 0">Quick Start</h4>
+        <ul style="margin:0 0 0 16px;padding:0;line-height:1.6">
+          <li>Join the server using the IP above.</li>
+          <li>Read rules in the Rules page and verify on Discord.</li>
+          <li>Open a ticket in Discord to purchase ranks or report issues.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div style="padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div><strong>Server Highlights</strong></div>
+          <div class="badge">24/7</div>
+        </div>
+        <ul style="margin-top:10px;color:rgba(255,255,255,0.9);line-height:1.6">
+          <li>High-spec hosting for low-latency gameplay.</li>
+          <li>Custom kits, homes, and backpack systems.</li>
+          <li>Regular events, seasonal rewards, and community contests.</li>
+        </ul>
+        <div style="margin-top:10px"><a href="#" style="color:var(--muted);text-decoration:underline" onclick="openDiscord()">Open a ticket in Discord to buy ranks or request support</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated boxes -->
+  <div class="grid" aria-hidden="false">
+    <div class="box" id="box-1">
+      <div class="shape s1"></div>
+      <div class="shape s2"></div>
+      <div class="title"><h3>Active Events</h3><div class="badge">LIVE</div></div>
+      <div style="display:flex;align-items:center;margin-top:12px">
+        <div class="icon">⚔️</div>
+        <div>
+          <div class="small">PvP tournaments, build contests, and seasonal events. Events are announced on Discord and YouTube — winners receive in-game rewards and rank discounts.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box" id="box-2">
+      <div class="shape s3"></div>
+      <div class="title"><h3>Top Players</h3><div class="badge">RANKS</div></div>
+      <div style="display:flex;align-items:center;margin-top:12px">
+        <div class="icon">🏆</div>
+        <div><div class="small">Leaderboards track activity, builds, and event performance. Seasonal MVPs get special perks and recognition on the server hub.</div></div>
+      </div>
+    </div>
+
+    <div class="box" id="box-3">
+      <div class="shape s2"></div>
+      <div class="title"><h3>Server Perks</h3><div class="badge">PERKS</div></div>
+      <div style="display:flex;align-items:center;margin-top:12px">
+        <div class="icon">⚙️</div>
+        <div><div class="small">Custom kits, homes, backpacks, /craft, /recipe, and quality-of-life commands to make survival smoother and more fun.</div></div>
+      </div>
+    </div>
+
+    <div class="box" id="box-4">
+      <div class="shape s1"></div>
+      <div class="title"><h3>Community</h3><div class="badge">BD</div></div>
+      <div style="display:flex;align-items:center;margin-top:12px">
+        <div class="icon">🤝</div>
+        <div><div class="small">Friendly Bangladeshi players, active staff, and a welcoming environment for new and veteran players alike.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section style="margin-top:20px;padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.03)">
+    <h3 style="margin:0 0 8px 0">Frequently Asked Questions</h3>
+    <div style="line-height:1.6">
+      <strong>How do I buy a rank</strong><br>
+      Open a ticket in the Discord support channel and follow staff instructions. Payment and delivery details are handled through the ticket system.<br><br>
+
+      <strong>Is the server safe for new players</strong><br>
+      Yes. We encourage new players to read the rules, use claims to protect builds, and ask staff for help when needed.<br><br>
+
+      <strong>Can I host events or build shops</strong><br>
+      Yes. Contact staff on Discord to propose events or request a shop area. Community-run events are encouraged.
+    </div>
+  </section>
+
+  <footer>© Amader SMP — node.flarehost.fun:5001 — Support: amadersmpbd@gmail.com</footer>
+</div>
+
+<!-- custom cursor -->
+<div class="cursor" id="cursor"><div class="dot"></div></div>
+
+<script>
+/* Custom cursor */
+(function(){
+  const cursor = document.getElementById('cursor');
+  let mx = innerWidth/2, my = innerHeight/2, px = mx, py = my;
+  const speed = 0.18;
+  window.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; cursor.style.display = 'flex'; });
+  function animate(){ px += (mx - px) * speed; py += (my - py) * speed; cursor.style.transform = `translate(${px}px, ${py}px) translate(-50%,-50%)`; requestAnimationFrame(animate); }
+  animate();
+  document.querySelectorAll('a,button,.box').forEach(el=>{
+    el.addEventListener('mouseenter', ()=> cursor.style.transform += ' scale(1.5)');
+    el.addEventListener('mouseleave', ()=> {});
+  });
+})();
+
+/* Red droplet snow canvas */
+(function(){
+  const canvas = document.getElementById('snow');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+  const droplets = []; const COUNT = Math.max(20, Math.floor(w/60));
+  function rand(a,b){return Math.random()*(b-a)+a}
+  for(let i=0;i<COUNT;i++) droplets.push({x:rand(0,w),y:rand(-h,0),r:rand(2,6),vx:rand(-0.4,0.4),vy:rand(0.6,2.2),alpha:rand(0.25,0.9)});
+  window.addEventListener('resize', ()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight});
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(let d of droplets){
+      d.x += d.vx; d.y += d.vy; d.vy += 0.002;
+      if(d.y > h+20 || d.x < -50 || d.x > w+50) Object.assign(d, {x:rand(0,w), y:rand(-80,-10), r:rand(2,6), vx:rand(-0.4,0.4), vy:rand(0.6,2.2), alpha:rand(0.25,0.9)});
+      const grd = ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*6);
+      grd.addColorStop(0,`rgba(214,27,43,${d.alpha*0.9})`);
+      grd.addColorStop(0.4,`rgba(214,27,43,${d.alpha*0.45})`);
+      grd.addColorStop(1,`rgba(214,27,43,0)`);
+      ctx.beginPath(); ctx.fillStyle = grd; ctx.arc(d.x,d.y,d.r*6,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.fillStyle = `rgba(214,27,43,${d.alpha})`; ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* helper */
+function openDiscord(){ window.open('https://discord.gg/','_blank') }
+</script>
+</body>
+</html>

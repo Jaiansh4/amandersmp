@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amader SMP — Ranks</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-green:#0b6b3a;--accent-red:#d61b2b}
+body{margin:0;font-family:Inter,system-ui;background:linear-gradient(180deg,#072f1a,#0b6b3a);color:#fff;cursor:none}
+.container{max-width:1100px;margin:20px auto;padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center}
+a.nav{color:rgba(255,255,255,0.85);text-decoration:none;margin-left:12px}
+.section{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+.rank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.rank{padding:14px;border-radius:12px;background:rgba(255,255,255,0.02);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .18s}
+.rank:hover{transform:translateY(-8px)}
+.rank .rhead{display:flex;justify-content:space-between;align-items:center}
+.price{background:var(--accent-red);padding:6px 10px;border-radius:8px;font-weight:800}
+.features{margin-top:10px;font-size:14px;color:rgba(255,255,255,0.9)}
+.rank::after{content:"";position:absolute;left:-40%;bottom:-30%;width:200%;height:120px;background:radial-gradient(circle at 20% 30%, rgba(214,27,43,0.08), transparent 30%);transform:rotate(-8deg);transition:transform .6s}
+.rank:hover::after{transform:translateX(6%) rotate(-8deg)}
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:36px;height:36px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+.cursor .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-red)}
+canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;z-index:10}
+.note{margin-top:12px;color:rgba(255,255,255,0.85);line-height:1.6}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="container">
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:48px;height:48px;border-radius:10px;background:radial-gradient(circle at 30% 30%,var(--accent-red),#b01722);display:flex;align-items:center;justify-content:center;font-weight:800">AS</div>
+      <div>
+        <strong>Amader SMP</strong>
+        <div style="font-size:13px;color:rgba(255,255,255,0.8)">Ranks and Perks</div>
+      </div>
+    </div>
+    <div>
+      <a class="nav" href="index.html">Home</a>
+      <a class="nav" href="about.html">About</a>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="ranks-title">
+    <h2 id="ranks-title" style="margin:0 0 8px 0">Available Ranks</h2>
+    <p class="note">Ranks are sold through Discord tickets. Each rank includes in-game perks and a duration. Staff will confirm delivery and apply the rank after purchase.</p>
+
+    <div class="rank-grid" style="margin-top:12px">
+      <div class="rank">
+        <div class="rhead"><div><strong>Custom Rank</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">Full Season</div></div><div class="price">500 BDT</div></div>
+        <div class="features">
+          <strong>Included</strong>: Custom prefix and color; Custom kit; Up to 12 homes; 6x backpack space; Any reasonable staff-approved feature; Commands: /craft /recipe /disposal /near /hat /endchest /anvil.
+        </div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">Notes: Custom ranks are tailored after discussion. Provide desired prefix, color, and kit details in your ticket.</div>
+      </div>
+
+      <div class="rank">
+        <div class="rhead"><div><strong>Celestial</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">60 Days</div></div><div class="price">400 BDT</div></div>
+        <div class="features">Cool prefix and color; High-tier exclusive kit; 7x homes; 6x backpack; /craft /recipe /disposal /near /hat /endchest /anvil.</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">Best for players who want prestige and convenience for two months.</div>
+      </div>
+
+      <div class="rank">
+        <div class="rhead"><div><strong>Titan</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">40 Days</div></div><div class="price">300 BDT</div></div>
+        <div class="features">Cool prefix and color; Best kit; 7x homes; 5x backpack; /craft /recipe /disposal /hat /endchest /anvil.</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">A strong mid-high tier for active players who want extended perks.</div>
+      </div>
+
+      <div class="rank">
+        <div class="rhead"><div><strong>Elite</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">30 Days</div></div><div class="price">200 BDT</div></div>
+        <div class="features">Cool prefix and color; Best kit; 6x homes; 5x backpack; /craft /recipe /disposal /hat /endchest.</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">Great for players who want a month of strong convenience features.</div>
+      </div>
+
+      <div class="rank">
+        <div class="rhead"><div><strong>Mythic</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">30 Days</div></div><div class="price">150 BDT</div></div>
+        <div class="features">Cool prefix and color; Best kit; 5x homes; 4x backpack; /craft /recipe /hat.</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">Balanced rank for active players who need advanced tools without the highest price.</div>
+      </div>
+
+      <div class="rank">
+        <div class="rhead"><div><strong>Knight</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">30 Days</div></div><div class="price">100 BDT</div></div>
+        <div class="features">Cool prefix and color; Kit; 3x homes; 2x backpack; /craft /recipe.</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.8)">Starter premium rank to support new players with a helpful kit and homes.</div>
+      </div>
+    </div>
+
+    <p style="margin-top:14px;color:rgba(255,255,255,0.85)"><strong>How to purchase</strong>: Open a ticket in the Discord support channel. Include your Minecraft username, desired rank, and payment confirmation when requested. Staff will respond with payment instructions and delivery ETA.</p>
+  </section>
+</div>
+
+<div class="cursor" id="cursor"><div class="dot"></div></div>
+
+<script>
+/* cursor */
+(function(){
+  const c = document.getElementById('cursor'); let mx=innerWidth/2,my=innerHeight/2,px=mx,py=my;const s=0.18;
+  window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.display='flex'});
+  function anim(){px+=(mx-px)*s;py+=(my-py)*s;c.style.transform=`translate(${px}px,${py}px) translate(-50%,-50%)`;requestAnimationFrame(anim)}
+  anim();
+  document.querySelectorAll('a,.rank').forEach(el=>{el.addEventListener('mouseenter',()=>c.style.transform += ' scale(1.4)')});
+})();
+
+/* red droplets */
+(function(){
+  const canvas = document.getElementById('snow'), ctx = canvas.getContext('2d');
+  let w=canvas.width=innerWidth,h=canvas.height=innerHeight;
+  const arr=[]; for(let i=0;i<Math.max(18,Math.floor(w/60));i++) arr.push({x:Math.random()*w,y:Math.random()*-h,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2});
+  window.addEventListener('resize',()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight});
+  function draw(){ctx.clearRect(0,0,w,h); for(let d of arr){d.x+=d.vx;d.y+=d.vy;d.vy+=0.002; if(d.y>h+20||d.x<-50||d.x>w+50) Object.assign(d,{x:Math.random()*w,y:Math.random()*-80,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2}); const g=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*6); g.addColorStop(0,`rgba(214,27,43,${d.a*0.9})`); g.addColorStop(0.4,`rgba(214,27,43,${d.a*0.45})`); g.addColorStop(1,'rgba(214,27,43,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(d.x,d.y,d.r*6,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.fillStyle=`rgba(214,27,43,${d.a})`; ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(draw); }
+  draw();
+})();
+</script>
+</body>
+</html>

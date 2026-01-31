@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amader SMP — About</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-green:#0b6b3a;--accent-red:#d61b2b}
+body{margin:0;font-family:Inter,system-ui;background:linear-gradient(180deg,#072f1a,#0b6b3a);color:#fff;cursor:none}
+.container{max-width:900px;margin:20px auto;padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center}
+.card{padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03);margin-top:14px}
+.ip{display:inline-block;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,0.12)}
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:36px;height:36px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;z-index:10}
+.list{line-height:1.7}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="container">
+  <div class="header">
+    <div><strong>Amader SMP</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">About</div></div>
+    <div><a href="index.html" style="color:rgba(255,255,255,0.85);text-decoration:none">Home</a></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 8px 0">About Us</h2>
+    <p>Amader SMP is a Bangladeshi 24/7 Minecraft survival server focused on community, performance, and fun. We support both Java and Bedrock players and run regular events, seasonal updates, and community projects.</p>
+
+    <p><strong>Server Addresses</strong><br>
+    Java IP: <span class="ip">node.flarehost.fun:5001</span><br>
+    Bedrock IP: <span class="ip">node.flarehost.fun:5001</span><br>
+    Port: <strong>5001</strong></p>
+
+    <h3 style="margin-top:12px">What we offer</h3>
+    <ul class="list">
+      <li><strong>High-Spec Performance</strong> — Dedicated hosting and optimized plugins for a smooth experience.</li>
+      <li><strong>Custom Features</strong> — Homes, backpacks, kits, and quality-of-life commands like /craft and /recipe.</li>
+      <li><strong>Active Community</strong> — Friendly Bangladeshi players, staff-run events, and community projects.</li>
+      <li><strong>Support</strong> — Open tickets on Discord for purchases, help, and appeals.</li>
+    </ul>
+
+    <h3 style="margin-top:12px">Useful Links</h3>
+    <p>Support: <a href="mailto:amadersmpbd@gmail.com" style="color:rgba(255,255,255,0.9)">amadersmpbd@gmail.com</a><br>
+    YouTube: <a href="https://www.youtube.com/@AmaderSMP" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.9)">AmaderSMP</a><br>
+    Discord: <span style="color:rgba(255,255,255,0.9)">AmaderSMP Discord</span></p>
+
+    <h3 style="margin-top:12px">Community Guidelines</h3>
+    <p class="list">Be respectful, follow rules, and help new players. Use claims or trust systems to protect builds and report issues to staff via Discord.</p>
+  </div>
+</div>
+
+<div class="cursor" id="cursor"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent-red)"></div></div>
+
+<script>
+/* cursor */
+(function(){const c=document.getElementById('cursor');let mx=innerWidth/2,my=innerHeight/2,px=mx,py=my,s=0.18;window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.display='flex'});function loop(){px+=(mx-px)*s;py+=(my-py)*s;c.style.transform=`translate(${px}px,${py}px) translate(-50%,-50%)`;requestAnimationFrame(loop)}loop();})();
+
+/* red droplets */
+(function(){const canvas=document.getElementById('snow'),ctx=canvas.getContext('2d');let w=canvas.width=innerWidth,h=canvas.height=innerHeight;const arr=[];for(let i=0;i<Math.max(18,Math.floor(w/60));i++)arr.push({x:Math.random()*w,y:Math.random()*-h,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2});window.addEventListener('resize',()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight});function draw(){ctx.clearRect(0,0,w,h);for(let d of arr){d.x+=d.vx;d.y+=d.vy;d.vy+=0.002;if(d.y>h+20||d.x<-50||d.x>w+50)Object.assign(d,{x:Math.random()*w,y:Math.random()*-80,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2});const g=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*6);g.addColorStop(0,`rgba(214,27,43,${d.a*0.9})`);g.addColorStop(0.4,`rgba(214,27,43,${d.a*0.45})`);g.addColorStop(1,'rgba(214,27,43,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(d.x,d.y,d.r*6,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.fillStyle=`rgba(214,27,43,${d.a})`;ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);}draw();})();
+</script>
+</body>
+</html>

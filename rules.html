@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amader SMP — Rules</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-green:#0b6b3a;--accent-red:#d61b2b}
+body{margin:0;font-family:Inter,system-ui;background:linear-gradient(180deg,#072f1a,#0b6b3a);color:#fff;cursor:none}
+.container{max-width:1000px;margin:20px auto;padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center}
+.card{padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03);margin-top:14px}
+h2{margin:0 0 8px 0}
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:36px;height:36px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;z-index:10}
+.note{color:rgba(255,255,255,0.85);line-height:1.6}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="container">
+  <div class="header">
+    <div><strong>Amader SMP</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">Rules</div></div>
+    <div><a href="index.html" style="color:rgba(255,255,255,0.85);text-decoration:none">Home</a></div>
+  </div>
+
+  <div class="card">
+    <h2>Discord Rules</h2>
+    <p class="note">These rules keep the community safe and welcoming. Staff decisions are final; appeals can be made through a support ticket.</p>
+    <ol>
+      <li><strong>Be Respectful</strong> — Treat everyone with respect. No insults, bullying, or harassment. Repeated violations may lead to mute or ban.</li>
+      <li><strong>No Spamming</strong> — Avoid repeated messages, mentions, or unnecessary pings. Use threads and channels appropriately.</li>
+      <li><strong>No NSFW or Offensive Content</strong> — Keep the community appropriate for all ages. Sharing explicit or hateful content is prohibited.</li>
+      <li><strong>No Self-Promotion</strong> — Do not promote other servers, links, or YouTube channels without permission from staff.</li>
+      <li><strong>Use Channels Properly</strong> — Keep discussions relevant to each channel’s topic. Off-topic posts may be moved or removed.</li>
+      <li><strong>Respect Staff Decisions</strong> — Moderators and administrators enforce rules. If you disagree, open a ticket for review.</li>
+    </ol>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2>Minecraft Rules</h2>
+    <p class="note">Follow these rules in-game. Breaking them can result in warnings, temporary bans, or permanent bans depending on severity.</p>
+    <ol>
+      <li><strong>No Griefing or Stealing</strong> — Do not destroy, loot, or interfere with other players’ builds or items. Respect claims and trusted areas.</li>
+      <li><strong>No Hacking or Exploiting</strong> — Any cheating (X-ray, duping, auto-clickers, macros) is strictly prohibited. Evidence-based bans will be enforced.</li>
+      <li><strong>No PvP Without Consent</strong> — Do not attack players unless they agree or during designated PvP events.</li>
+      <li><strong>Protect Private Areas</strong> — Use claims or trust systems to protect your base. Respect other players’ protected land.</li>
+      <li><strong>No Lag-Causing Builds or Farms</strong> — Avoid redstone contraptions or farms that cause server lag. Staff may request changes to reduce impact.</li>
+      <li><strong>Respect the Community</strong> — Be cooperative and helpful. Harassment, doxxing, or targeted abuse will be punished.</li>
+    </ol>
+
+    <h3 style="margin-top:12px">Reporting and Appeals</h3>
+    <p class="note">Report rule violations by opening a ticket in Discord with evidence (screenshots, timestamps, player names). Appeals for punishments should be submitted through the support ticket system and will be reviewed by staff.</p>
+
+    <p style="margin-top:12px;color:rgba(255,255,255,0.9)">~Best Regards <strong>EchoSensei</strong></p>
+  </div>
+</div>
+
+<div class="cursor" id="cursor"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent-red)"></div></div>
+
+<script>
+/* cursor + red droplets */
+(function(){const c=document.getElementById('cursor');let mx=innerWidth/2,my=innerHeight/2,px=mx,py=my,s=0.18;window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.display='flex'});function loop(){px+=(mx-px)*s;py+=(my-py)*s;c.style.transform=`translate(${px}px,${py}px) translate(-50%,-50%)`;requestAnimationFrame(loop)}loop();})();
+(function(){const canvas=document.getElementById('snow'),ctx=canvas.getContext('2d');let w=canvas.width=innerWidth,h=canvas.height=innerHeight;const arr=[];for(let i=0;i<Math.max(18,Math.floor(w/60));i++)arr.push({x:Math.random()*w,y:Math.random()*-h,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2});window.addEventListener('resize',()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight});function draw(){ctx.clearRect(0,0,w,h);for(let d of arr){d.x+=d.vx;d.y+=d.vy;d.vy+=0.002;if(d.y>h+20||d.x<-50||d.x>w+50)Object.assign(d,{x:Math.random()*w,y:Math.random()*-80,r:Math.random()*4+2,vx:(Math.random()-0.5)*0.6,vy:Math.random()*1.6+0.6,a:Math.random()*0.8+0.2});const g=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,d.r*6);g.addColorStop(0,`rgba(214,27,43,${d.a*0.9})`);g.addColorStop(0.4,`rgba(214,27,43,${d.a*0.45})`);g.addColorStop(1,'rgba(214,27,43,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(d.x,d.y,d.r*6,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.fillStyle=`rgba(214,27,43,${d.a})`;ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fill();}requestAnimationFrame(draw);}draw();})();
+</script>
+</body>
+</html>

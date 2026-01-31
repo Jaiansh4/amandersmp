@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amader SMP — Owner</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-green:#0b6b3a;--accent-red:#d61b2b}
+body{margin:0;font-family:Inter,system-ui;background:linear-gradient(180deg,#072f1a,#0b6b3a);color:#fff;cursor:none}
+.container{max-width:900px;margin:20px auto;padding:18px}
+.card{padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+.cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;width:36px;height:36px;border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;z-index:10}
+a.link{color:rgba(255,255,255,0.85);text-decoration:none}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="container">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div><strong>Owner</strong><div style="font-size:13px;color:rgba(255,255,255,0.8)">About the owner</div></div>
+    <div><a class="link" href="index.html">Home</a></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2 style="margin:0 0 8px 0">The_Echo_Sensei</h2>
+    <p><strong>Real name</strong>: Tasfiqur Rahman</p>
+    <p><strong>Role</strong>: Owner and lead admin of Amader SMP. Tasfiqur oversees server development, plugin configuration, event planning, and community moderation.</p>
+
+    <h3 style="margin-top:12px">Background</h3>
+    <p>Tasfiqur is Bangladeshi and has been running Minecraft communities for several years. He focuses on creating a stable, fair, and fun environment where players can build, compete, and collaborate. Under his leadership the server emphasizes performance, regular updates, and community-driven features.</p>
+
+    <h3 style="margin-top:12px">Responsibilities</h3>
+    <ul style="line-height:1.6">
+      <li>Server administration and uptime monitoring.</li>
+      <li>Plugin selection and custom feature development.</li>
+      <li>Event coordination and prize distribution.</li>
+      <li>Staff recruitment and training.</li>
+    </ul>
+
+    <p style="margin-top:12px;color:rgba(255,255,255,0.9)"><strong>Contact</strong>: Reach out via the Discord server for questions, suggestions, or support requests. Staff will escalate important matters to Tasfiqur when needed.</p>
+  </div>
+</div>
+
+<div class="cursor" id="cursor"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent-red)"></div></div>
+
+<script>
+/* cursor + red droplets */
+(function(){
+  const c = document.getElementById('cursor');
+  let mx = innerWidth/2, my = innerHeight/2, px = mx, py = my, s = 0.18;
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; c.style.display = 'flex'; });
+  function loop(){ px += (mx - px) * s; py += (my - py) * s; c.style.transform = `translate(${px}px,${py}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
+  loop();
+})();
+
+(function(){
+  const canvas = document.getElementById('snow');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+  const arr = [];
+  const COUNT = Math.max(18, Math.floor(w/60));
+  function rand(a,b){ return Math.random()*(b-a)+a; }
+  for(let i=0;i<COUNT;i++){
+    arr.push({ x: rand(0,w), y: rand(-h,0), r: rand(2,6), vx: rand(-0.6,0.6), vy: rand(0.6,2.2), a: rand(0.25,0.9) });
+  }
+  window.addEventListener('resize', ()=>{ w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(const d of arr){
+      d.x += d.vx; d.y += d.vy; d.vy += 0.002;
+      if(d.y > h + 20 || d.x < -50 || d.x > w + 50){
+        Object.assign(d, { x: rand(0,w), y: rand(-80,-10), r: rand(2,6), vx: rand(-0.6,0.6), vy: rand(0.6,2.2), a: rand(0.25,0.9) });
+      }
+      const grd = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r*6);
+      grd.addColorStop(0, `rgba(214,27,43,${d.a*0.9})`);
+      grd.addColorStop(0.4, `rgba(214,27,43,${d.a*0.45})`);
+      grd.addColorStop(1, 'rgba(214,27,43,0)');
+      ctx.beginPath(); ctx.fillStyle = grd; ctx.arc(d.x, d.y, d.r*6, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.fillStyle = `rgba(214,27,43,${d.a})`; ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
